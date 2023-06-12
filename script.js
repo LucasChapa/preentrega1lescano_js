@@ -1,12 +1,4 @@
-function saludar() {
-    alert("Bienvenido a Super Chapa")
-}
-
-function calcularCosto(cantidad, precio) {
-    return cantidad * precio
-}
-
-saludar()
+alert("Bienvenido a Super Chapa")
 
 function opcion() {
     let ingreseOpcion = prompt("Que desea hacer?: \n1_Consultar precios\n2_Realizar pedido\n3_Dejar un comentario")
@@ -26,7 +18,6 @@ function opcion() {
 
 
     } else if (ingreseOpcion == "2") {
-        let = ""
         let total = 0
         let mensaje = "Productos:\n1_ Arroz\n2_ Pan\n3_ Carne\n4_ Acelga\n5_ Finalizar compra\n0_ Salir"
         let opcion
@@ -46,7 +37,7 @@ function opcion() {
                 alert("Acelga agregado al carrito")
                 total = total + 160
             } else if (opcion === 5) {
-                alert("El total a pagar es:" + total)
+                alert("El total a pagar es: $" + total)
                 total = 0
             }
         } while (opcion !== 0)
