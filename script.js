@@ -1,47 +1,91 @@
-alert("Bienvenido a Super Chapa")
+
+
+let productos = [
+    { nombre: "Manzana", id: 1, categoria: "verduleria", precio: 1200 },
+    { nombre: "Banana", id: 2, categoria: "verduleria", precio: 800 },
+    { nombre: "Chorizo", id: 3, categoria: "carniceria", precio: 2000 },
+    { nombre: "Asado", id: 4, categoria: "carniceria", precio: 3000 },
+    { nombre: "Pan", id: 5, categoria: "panaderia", precio: 1200 },
+    { nombre: "Factura", id: 6, categoria: "panaderia", precio: 150 },
+    { nombre: "Jamon cocido", id: 7, categoria: "fiambreria", precio: 3500 },
+    { nombre: "Queso cremoso", id: 8, categoria: "fiambreria", precio: 2700 }
+]
+
+const carrito = []
+
+function mostrarProductos() {
+    let mensaje = 'Productos disponibles:\n\n'
+    productos.forEach(item => {
+        mensaje += `-ID: ${item.id} (${item.nombre}) - Precio: $${item.precio}\n`
+    })
+    alert(mensaje)
+}
+
+function agregarAlCarrito() {
+    const seleccion = parseInt(prompt('Ingrese el ID del producto que desea comprar:'))
+    const producto = productos.find(item => item.id === seleccion)
+    if (producto) {
+        carrito.push(producto)
+        alert(`¡"${producto.nombre}"  ha sido agregado al carrito!`)
+    } else {
+        alert('El producto no existe.')
+    }
+}
+
+function mostrarCarrito() {
+    if (carrito.length === 0) {
+        alert('Usted no seleccionó ningun articulo')
+    } else {
+        let mensaje = 'Usted seleccionó:\n\n'
+        carrito.forEach(item => {
+            mensaje += `- ${item.nombre} - Precio: $${item.precio}\n`
+        })
+        alert(mensaje)
+    }
+}
+
+function calcularTotal() {
+    const total = carrito.reduce((suma, item) => suma + item.precio, 0)
+    return total
+}
+
+function finalizarCompra() {
+    const total = calcularTotal()
+    alert( "Su compra es de $" + total)
+}
 
 function opcion() {
     let ingreseOpcion = prompt("Que desea hacer?: \n1_Consultar precios\n2_Realizar pedido\n3_Dejar un comentario")
 
     if (ingreseOpcion == "1") {
-        let producto = prompt("Ingrese producto:\nArroz\nPan\nCarne\nAcelga").toLowerCase()
-
-        if (producto == "arroz") {
-            alert("El kilo de arroz cuesta $500")
-        } else if (producto == "pan") {
-            alert("El kilo de pan cuesta $360")
-        } else if (producto == "carne") {
-            alert("El kilo de carne cuesta $2400")
-        } else {
-            alert("El kilo de acelga cuesta $160")
-        }
-
+        mostrarProductos()
 
     } else if (ingreseOpcion == "2") {
-        let total = 0
-        let mensaje = "Productos:\n1_ Arroz\n2_ Pan\n3_ Carne\n4_ Acelga\n5_ Finalizar compra\n0_ Salir"
-        let opcion
+        mostrarProductos()
 
-        do {
-            opcion = Number(prompt(mensaje))
-            if (opcion === 1) {
-                alert("Arroz agregado al carrito")
-                total = total + 500
-            } else if (opcion === 2) {
-                alert("Pan agregado al carrito")
-                total = total + 360
-            } else if (opcion === 3) {
-                alert("Carne agregado al carrito")
-                total = total + 2400
-            } else if (opcion === 4) {
-                alert("Acelga agregado al carrito")
-                total = total + 160
-            } else if (opcion === 5) {
-                alert("El total a pagar es: $" + total)
-                total = 0
+        while (true) {
+            const opcion = prompt('Seleccione una opción:\n0. Mostrar lista de productos\n1. Agregar producto al carrito\n2. Mostrar carrito\n3. Finalizar compra\n4. Salir')
+
+            if (opcion === '0') {
+                mostrarProductos()
+            } else if (opcion === '1') {
+                agregarAlCarrito()
+            } else if (opcion === '2') {
+                mostrarCarrito()
+            } else if (opcion === '3') {
+                if (carrito.length === 0) {
+                    alert('El carrito está vacío.')
+                } else {
+                    finalizarCompra()
+                    break
+                }
+            } else if (opcion === '4') {
+                break
+            } else {
+                alert('Opción inválida.')
             }
-        } while (opcion !== 0)
-        alert("Muchas gracias por su visita")
+        }
+
 
     } else if (ingreseOpcion == "3") {
         let texto = prompt("Ingrese mensaje")
@@ -49,7 +93,9 @@ function opcion() {
         alert("El mensaje fue enviado con exito")
     }
     opcion()
-}
-opcion()
 
+}
+
+alert("Bienvenido a Super Chapa")
+opcion()
 
