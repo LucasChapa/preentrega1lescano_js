@@ -22,21 +22,21 @@ function mostrarProductos() {
 }
 
 function agregarAlCarrito() {
-    const seleccion = parseInt(prompt('Ingrese el ID del producto que desea comprar:'))
+    const seleccion = parseInt(prompt("Ingrese el ID del producto que desea comprar:"))
     const producto = productos.find(item => item.id === seleccion)
     if (producto) {
         carrito.push(producto)
         alert(`¡"${producto.nombre}"  ha sido agregado al carrito!`)
     } else {
-        alert('El producto no existe.')
+        alert("El producto no existe.")
     }
 }
 
 function mostrarCarrito() {
     if (carrito.length === 0) {
-        alert('Usted no seleccionó ningun articulo')
+        alert("NO se registran articulos")
     } else {
-        let mensaje = 'Usted seleccionó:\n\n'
+        let mensaje = "Usted seleccionó:\n\n"
         carrito.forEach(item => {
             mensaje += `- ${item.nombre} - Precio: $${item.precio}\n`
         })
@@ -55,7 +55,7 @@ function finalizarCompra() {
 }
 
 function opcion() {
-    let ingreseOpcion = prompt("Que desea hacer?: \n1_Consultar precios\n2_Realizar pedido\n3_Dejar un comentario")
+    let ingreseOpcion = prompt("Que desea hacer?: \n1_Consultar precios\n2_Realizar pedido\n3_Dejar un comentario\n4_Salir")
 
     if (ingreseOpcion == "1") {
         mostrarProductos()
@@ -64,25 +64,25 @@ function opcion() {
         mostrarProductos()
 
         while (true) {
-            const opcion = prompt('Seleccione una opción:\n0. Mostrar lista de productos\n1. Agregar producto al carrito\n2. Mostrar carrito\n3. Finalizar compra\n4. Salir')
+            const opcion = prompt("Seleccione una opción:\n0. Mostrar lista de productos\n1. Agregar producto al carrito\n2. Mostrar carrito\n3. Finalizar compra\n4. Salir")
 
-            if (opcion === '0') {
+            if (opcion === "0") {
                 mostrarProductos()
-            } else if (opcion === '1') {
+            } else if (opcion === "1") {
                 agregarAlCarrito()
-            } else if (opcion === '2') {
+            } else if (opcion === "2") {
                 mostrarCarrito()
-            } else if (opcion === '3') {
+            } else if (opcion === "3") {
                 if (carrito.length === 0) {
-                    alert('El carrito está vacío.')
+                    alert("El carrito está vacío.")
                 } else {
                     finalizarCompra()
                     break
                 }
-            } else if (opcion === '4') {
+            } else if (opcion === "4") {
                 break
             } else {
-                alert('Opción inválida.')
+                alert("Opción inválida.")
             }
         }
 
@@ -91,8 +91,12 @@ function opcion() {
         let texto = prompt("Ingrese mensaje")
         let mail = prompt("Ingrese su mail")
         alert("El mensaje fue enviado con exito")
-    }
-    opcion()
+    } else if (ingreseOpcion == "4"){
+        alert("Gracias por su visita")
+
+    } else {
+                alert('Opción inválida.')
+            }
 
 }
 
