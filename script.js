@@ -1,15 +1,94 @@
-
-
 let productos = [
-    { nombre: "Manzana", id: 1, categoria: "verduleria", precio: 1200 },
-    { nombre: "Banana", id: 2, categoria: "verduleria", precio: 800 },
-    { nombre: "Chorizo", id: 3, categoria: "carniceria", precio: 2000 },
-    { nombre: "Asado", id: 4, categoria: "carniceria", precio: 3000 },
-    { nombre: "Pan", id: 5, categoria: "panaderia", precio: 1200 },
-    { nombre: "Factura", id: 6, categoria: "panaderia", precio: 150 },
-    { nombre: "Jamon cocido", id: 7, categoria: "fiambreria", precio: 3500 },
-    { nombre: "Queso cremoso", id: 8, categoria: "fiambreria", precio: 2700 }
+    { nombre: "manzana", id: 1, categoria: "verduleria", precio: 1200, rutaImagen: "manzana.png" },
+    { nombre: "banana", id: 2, categoria: "verduleria", precio: 800, rutaImagen: "banana.png" },
+    { nombre: "chorizo", id: 3, categoria: "carniceria", precio: 2000, rutaImagen: "chorizo.png" },
+    { nombre: "asado", id: 4, categoria: "carniceria", precio: 3000, rutaImagen: "asado.png" },
+    { nombre: "pan", id: 5, categoria: "panaderia", precio: 1200, rutaImagen: "pan.png" },
+    { nombre: "factura", id: 6, categoria: "panaderia", precio: 150, rutaImagen: "factura.png" },
+    { nombre: "jamon cocido", id: 7, categoria: "fiambreria", precio: 3500, rutaImagen: "jamon.png" },
+    { nombre: "queso cremoso", id: 8, categoria: "fiambreria", precio: 2700, rutaImagen: "queso.png" }
 ]
+
+let carrito = []
+let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
+
+if (carritoJSON) {
+    carrito = carritoJSON
+}
+
+let contenedor = document.getElementById("productos")
+crearTarjetas(productos, contenedor)
+crearTarjetasCarrito(carritoJSON)
+
+function crearTarjetas(array) {
+    contenedor.innerHTML = ""
+
+    array.forEach(elemento => {
+        let producto = document.createElement("div")
+        producto.className = "tarjetaProducto"
+        producto.innerHTML = `
+        <h4>${elemento.nombre}</h4>
+        <img class="imagen" src="./img/${elemento.rutaImagen}">
+        <h4>$${elemento.precio}</h4>
+        <button id=${elemento.id}>Agregar al carrito</button>
+    `
+        contenedor.appendChild(producto)
+        let botonAgregarAlCarrito = document.getElementById(elemento.id)
+        botonAgregarAlCarrito.addEventListener("click", agregarAlCarrito)
+    })
+}
+
+function agregarAlCarrito(e) {
+    let productoBuscado = productos.find(elemento => elemento.id === Number(e.target.id))
+    carrito.push({
+        id: productoBuscado.id,
+        nombre: productoBuscado.nombre,
+        precio: productoBuscado.precio
+    })
+    console.log(carrito)
+    crearTarjetasCarrito(carritoJSON)
+
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+}
+
+function crearTarjetasCarrito(carritoJSON) {
+    let carritoFisico = document.getElementById("carrito")
+
+    carrito.forEach(elemento => {
+        carritoFisico.innerHTML += `<p>${elemento.nombre} ${elemento.precio}</p>`
+    })
+}
+
+let buscador = document.getElementById("buscador")
+buscador.addEventListener("input", filtrar)
+
+function filtrar() {
+    let arrayFiltrado = productos.filter(producto => producto.nombre.includes(buscador.value) || producto.categoria.includes(buscador.value))
+    crearTarjetas(arrayFiltrado)
+}
+
+let botonesFiltros = document.getElementsByClassName("filtro")
+for (const botonFiltro of botonesFiltros) {
+    botonFiltro.addEventListener("click", filtarPorCategoria)
+}
+
+function filtarPorCategoria(e) {
+    let elementosFiltrados = productos.filter(producto => producto.categoria === e.target.id)
+    crearTarjetas(elementosFiltrados)
+}
+
+let botonCarrito = document.getElementById("botonCarrito")
+botonCarrito.addEventListener("click", mostrarOcultar)
+
+function mostrarOcultar() {
+    let padreProducto = document.getElementById("contenedorProductos")
+    let carrito = document.getElementById("carrito")
+    padreProducto.classList.toggle("oculto")
+    carrito.classList.toggle("oculto")
+}
+
+/*         -----ESTA PARTE HACIA ABAJO LA DEJO POR LAS DUDAS ES DE LOS ANTERIORES TP----
+
 
 const carrito = []
 
@@ -101,5 +180,6 @@ function opcion() {
 }
 
 alert("Bienvenido a Super Chapa")
-opcion()
+opcion()*/
+
 
